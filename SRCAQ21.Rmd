@@ -3,6 +3,8 @@ title: "SRCAQ-21"
 author: "Hanif Akhtar"
 date: "1/19/2022"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -10,10 +12,24 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introduction
-
+This paper outlines the development and initial validation of the Self-Report Cognitive Abilities Questionnaire (SRCAQ), a brief measure designed to assess cognitive functioning in the ability areas of Fluid Reasoning (Gf), Short-term Working Memory (Gwm), Long Term Storage, and Retrieval (Glr), Comprehension Knowledge (Gc), Processing Speed (Gs), Auditory Processing (Ga), and Visual Processing (Gv). 
+This study is important for several reasons: 
+1) There is no brief measure of self-report cognitive abilities that capture comprehensive cognitive abilities based on CHC theory. Most measures used multiple intelligence framework as a theory foundation and the only exist measure of self-reported cognitive abilities based on CHC theory only assess three narrow abilities: Gf, Gc, and Gv (Jacobs & Roodenburg, 2014).
+2) None of the existing instruments investigated the measurement invariance across sex, despite many studies compared self-reported cognitive abilities across gender.
+3) Self-report cognitive ability is a construct that is closely related to other construct such as metacognition and personality. This measure could be useful to make further investigation of the relation between objective cognitive ability, metacognition, and personality.
 
 # Data analysis
-This is data anaylsis of the development of SRCAQ-21. In study 1, EFA was performed to explore dimensionality of the measure. Overal scale and each subscale then assessed their reliability by using McDonald omega. In study 2, CFA was performed to confirm the stucture model. There were three model compared: seven factor model, unidimensi model, and second-order model. Validity then assessed by correlating with external measure (Self-estimated cognitive abilities)
+This is data anaylsis section of the development of SRCAQ. In study 1, EFA was performed to explore dimensionality of the measure. Overal scale and each subscale then assessed their reliability by using Cronbach's Alpha. In study 2, CFA was performed to confirm the structure model. There were three model compared: seven factor model, unidimensi model, and second-order model. Validity then assessed by correlating with external measure (Self-estimated cognitive abilities).
+
+## Calling library
+```{r}
+library(tidyverse)
+library(psych)
+library(lavaan)
+library(semTools)
+library(ggplot2)
+library(semPlot)
+```
 
 
 ## Data preparation
@@ -36,9 +52,168 @@ items_study2 <- study2 %>%
 
 ## Exploratory Data Analysis
 ```{r}
-summary(study1)
 describe(study1)
 prop.table(table(study1$Sex))
 prop.table(table(study1$Domicile))
 ```
+Skewness and kurtosis of all items are below 1.00, indicating univariate normality. 
 
+## EFA
+### Create the correlation matrix
+```{r}
+cor_matrix <- lowerCor(items_study1)
+```
+
+### Asumption check
+#### Calculate the KMO score.
+```{r}
+KMO(cor_matrix)
+```
+
+#### Bartlett's sphericity test
+```{r}
+cortest.bartlett(cor_matrix, n = 412)
+```
+The Kaiser–Meyer–Olkin (KMO) measure of sampling adequacy index was .86 and Bartlett's test of sphericity was significant (p < .001) suggesting that the sample was suitable for factor analysis. 
+
+### Create scree plot
+Create a scree plot to help the decision on how many factors to include
+```{r}
+scree(items_study1)
+fa.parallel(items_study1)
+```
+
+### Run the factor analysis with 7 factors.
+```{r}
+fa_7 <- fa(items_study1, nfactors = 7, fm = "pa", rotate = "promax")
+print(fa_7$loadings, cutoff = 0.3)
+```
+The principal axis factoring extraction method in combination with Promax rotation was used, since permitting the factors to correlate was logically justified. Parallel analysis was conducted indicating a seven-factor solution. Item were distributed to their intended factors.
+
+### Alpha cronbach
+```{r}
+alpha.All <- alpha(items_study1[, 1:21])
+alpha.Gf <- alpha(items_study1[, 1:3])
+alpha.Gwm <- alpha(items_study1[, 4:6])
+alpha.Glr <- alpha(items_study1[, 7:9])
+alpha.Gv <- alpha(items_study1[, 10:12])
+alpha.Gc <- alpha(items_study1[, 13:15])
+alpha.Ga <- alpha(items_study1[, 16:18])
+alpha.Gs <- alpha(items_study1[, 19:21])
+```
+Cronbach’s Alpha for item groups for Gf, Gwm, Glr, Gv, Gc, Ga, and Gs α = .73, α = .78, α = .76, α = .78, α = .77,  α = .76, and  α = .68 respectively. Cronbach’s Alpha for all items α = 88.
+
+## Conclusion of Study 1
+Study 1 found that SRCAQ could be better explained by using seven-factors model. It was anticipated that a seven-factor solution would describe the data, which was consistent with the theoretical basis proposed. Cronbach's Alpha of each subscale were acceptable (> .70), except for Gs.
+
+
+# Study 2: Confirmatory Factor Analysis
+## Exploratory Data Analysis
+```{r}
+describe(study2)
+prop.table(table(study2$Sex))
+prop.table(table(study2$Domicile))
+```
+
+## CFA
+### Seven-factor model
+```{r}
+SECA.model1 <- ' 
+Gf  =~ SECA1 + SECA2 + SECA3
+Gwm =~ SECA4 + SECA5 + SECA6
+Glr  =~ SECA7 + SECA8 + SECA9
+Gv =~ SECA10 + SECA11 + SECA12
+Gc =~ SECA13 + SECA14 + SECA15
+Ga =~ SECA16 + SECA17 + SECA18
+Gs =~ SECA19 + SECA20 + SECA21
+'
+fit1 <- cfa(SECA.model1, data = items_study2, std.lv=TRUE)
+summary(fit1, standardized=TRUE, fit.measures=T)
+semPaths(fit1, style = "lisrel", layout = "tree", edge.color = "black",
+         residuals = F, sizeMan = 6, sizeLat = 6, sizeMan2 = 5, sizeLat2 = 5, 
+         edge.label.cex = 1, label.cex = 1, fixedStyle = "1",)
+```
+
+### one-factor model
+```{r}
+SECA.model2 <- ' 
+G =~ SECA1 + SECA2 + SECA3 + SECA4 + SECA5 + SECA6 + SECA7 + SECA8 + SECA9 + SECA10 + 
+SECA11 + SECA12 + SECA13 + SECA14 + SECA15 + SECA16 + SECA17 + SECA18 + SECA19 + SECA20 + SECA21
+'
+fit2 <- cfa(SECA.model2, data = items_study2, std.lv=TRUE)
+summary(fit2, standardized=TRUE, fit.measures=T)
+semPaths(fit2, style = "lisrel", layout = "tree", edge.color = "black",
+         residuals = F, sizeMan = 6, sizeLat = 6, sizeMan2 = 5, sizeLat2 = 5, 
+         edge.label.cex = 1, label.cex = 1, fixedStyle = "1", )
+```
+
+### Second-order model
+```{r}
+SECA.model3 <- ' 
+Gf  =~ SECA1 + SECA2 + SECA3
+Gwm =~ SECA4 + SECA5 + SECA6
+Glr  =~ SECA7 + SECA8 + SECA9
+Gv =~ SECA10 + SECA11 + SECA12
+Gc =~ SECA13 + SECA14 + SECA15
+Ga =~ SECA16 + SECA17 + SECA18
+Gs =~ SECA19 + SECA20 + SECA21
+G =~ Gf + Gwm + Glr + Gv + Gc + Ga + Gs
+'
+
+fit3 <- cfa(SECA.model3, data = items_study2, std.lv=TRUE)
+summary(fit3, standardized=TRUE, fit.measures=T)
+semPaths(fit3, style = "lisrel", layout = "tree", edge.color = "black",
+         residuals = F, sizeMan = 6, sizeLat = 6, sizeMan2 = 5, sizeLat2 = 5, 
+         edge.label.cex = 1, label.cex = 1, fixedStyle = "1", )
+```
+
+### Model comparison
+```{r}
+anova(fit1, fit2, fit3)
+```
+The seven-factor model provided the best fit to the data with the highest value of CFI and TLI, and the lowest value of RMSEA, SRMR, and AIC in comparison to single-factor and second order model. 
+
+## nested model comparisons: measurement invariance by Sex
+```{r}
+fit.config <- cfa(SECA.model1, data = study2, group = "Sex")
+fit.metric <- cfa(SECA.model1, data = study2, group = "Sex",
+                  group.equal = "loadings")
+fit.scalar <- cfa(SECA.model1, data = study2, group = "Sex",
+                  group.equal = c("loadings","intercepts"))
+fit.strict <- cfa(SECA.model1, data = study2, group = "Sex",
+                  group.equal = c("loadings","intercepts","residuals"))
+measEqOut <- compareFit(fit.config, fit.metric, fit.scalar, fit.strict)
+summary(measEqOut)
+summary(measEqOut, fit.measures = c("cfi", "rmsea", "srmr"))
+```
+The configural model (M1) had adequate fit indices, indicating the same factor structure in males and females. The fit indices (e.g., Chi-square, CFI, RMSEA, SRMR) of each model remained nearly unchanged in comparison to the fit indices of another model. Taking all of the results into consideration, the three models (metric through strict) showed no significant reductions in model fits, indicating that the six-factor structure reaches strict invariance between males and females.
+
+# Independent sample t-test
+```{r}
+t.test(SR.Gf ~ Sex, data = study2)
+t.test(SR.Gwm ~ Sex, data = study2)
+t.test(SR.Glr ~ Sex, data = study2)
+t.test(SR.Gv ~ Sex, data = study2)
+t.test(SR.Gc ~ Sex, data = study2)
+t.test(SR.Ga ~ Sex, data = study2)
+t.test(SR.Gs ~ Sex, data = study2)
+```
+Significant sex differences of cognitive abilities only found in Gv.
+
+# Correlation with external measure
+```{r}
+correlation <- lowerCor(study2[, c(5, 27:40)])
+```
+Each subscales were correlated with external measure (Self-Estimated Cognitive Ability). The same construct has high correlation (r = > .50), while cross-construct has low to moderate correlation.
+
+#Alpha Cronbach study 2
+```{r}
+alpha.All2 <- alpha(items_study2[, 1:21])
+alpha.Gf2 <- alpha(items_study2[, 1:3])
+alpha.Gwm2 <- alpha(items_study2[, 4:6])
+alpha.Glr2 <- alpha(items_study2[, 7:9])
+alpha.Gv2 <- alpha(items_study2[, 10:12])
+alpha.Gc2 <- alpha(items_study2[, 13:15])
+alpha.Ga2 <- alpha(items_study2[, 16:18])
+alpha.Gs2 <- alpha(items_study2[, 19:21])
+```
