@@ -1,0 +1,44 @@
+---
+title: "SRCAQ-21"
+author: "Hanif Akhtar"
+date: "1/19/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+
+# Data analysis
+This is data anaylsis of the development of SRCAQ-21. In study 1, EFA was performed to explore dimensionality of the measure. Overal scale and each subscale then assessed their reliability by using McDonald omega. In study 2, CFA was performed to confirm the stucture model. There were three model compared: seven factor model, unidimensi model, and second-order model. Validity then assessed by correlating with external measure (Self-estimated cognitive abilities)
+
+
+## Data preparation
+```{r cars}
+setwd("E:/Google Drive UMM/PhD ELTE/Git/SRCAQ21")
+# Reading data
+study1 <- read.csv("study1(n=412).csv")
+study2 <- read.csv("study2(n=405).csv")
+```
+
+## Creating dataset for items
+```{r}
+items_study1<- study1 %>% 
+  select(starts_with("SECA"))
+items_study2 <- study2 %>% 
+  select(starts_with("SECA"))
+```
+
+# Study 1: Initial validation of SRCAQ-21
+
+## Exploratory Data Analysis
+```{r}
+summary(study1)
+describe(study1)
+prop.table(table(study1$Sex))
+prop.table(table(study1$Domicile))
+```
+
