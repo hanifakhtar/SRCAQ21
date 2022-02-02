@@ -1,183 +1,327 @@
----
-title: "SRCAQ-21"
-author: "Hanif Akhtar"
-date: "1/19/2022"
-output:
-  html_document:
-    keep_md: yes
-  pdf_document: default
-editor_options:
-  chunk_output_type: console
----
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={SRCAQ-21},
+  pdfauthor={Hanif Akhtar},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 
+\title{SRCAQ-21}
+\author{Hanif Akhtar}
+\date{1/19/2022}
 
+\begin{document}
+\maketitle
 
-# Introduction
-This paper outlines the development and initial validation of the Self-Report Cognitive Abilities Questionnaire (SRCAQ), a brief measure designed to assess cognitive functioning in the ability areas of Fluid Reasoning (Gf), Short-term Working Memory (Gwm), Long Term Storage, and Retrieval (Glr), Comprehension Knowledge (Gc), Processing Speed (Gs), Auditory Processing (Ga), and Visual Processing (Gv). 
-This study is important for several reasons: 
-1) There is no brief measure of self-report cognitive abilities that capture comprehensive cognitive abilities based on CHC theory. Most measures used multiple intelligence framework as a theory foundation and the only exist measure of self-reported cognitive abilities based on CHC theory only assess three narrow abilities: Gf, Gc, and Gv (Jacobs & Roodenburg, 2014).
-2) None of the existing instruments investigated the measurement invariance across sex, despite many studies compared self-reported cognitive abilities across sex
-3) Self-report cognitive ability is a construct that is closely related to other construct such as metacognition and personality. This measure could be useful to make further investigation of the relation between objective cognitive ability, metacognition, and personality.
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
 
-# Data analysis
-This is data anaylsis section of the development of SRCAQ. In study 1, EFA was performed to explore dimensionality of the measure. Overal scale and each subscale then assessed their reliability by using Cronbach's Alpha. In study 2, CFA was performed to confirm the structure model. There were three model compared: seven factor model, unidimensi model, and second-order model. Validity then assessed by correlating with external measure (Self-estimated cognitive abilities).
+This paper outlines the development and initial validation of the
+Self-Report Cognitive Abilities Questionnaire (SRCAQ), a brief measure
+designed to assess cognitive functioning in the ability areas of Fluid
+Reasoning (Gf), Short-term Working Memory (Gwm), Long Term Storage, and
+Retrieval (Glr), Comprehension Knowledge (Gc), Processing Speed (Gs),
+Auditory Processing (Ga), and Visual Processing (Gv). This study is
+important for several reasons: 1) There is no brief measure of
+self-report cognitive abilities that capture comprehensive cognitive
+abilities based on CHC theory. Most measures used multiple intelligence
+framework as a theory foundation and the only exist measure of
+self-reported cognitive abilities based on CHC theory only assess three
+narrow abilities: Gf, Gc, and Gv (Jacobs \& Roodenburg, 2014). 2) None
+of the existing instruments investigated the measurement invariance
+across sex, despite many studies compared self-reported cognitive
+abilities across sex 3) Self-report cognitive ability is a construct
+that is closely related to other construct such as metacognition and
+personality. This measure could be useful to make further investigation
+of the relation between objective cognitive ability, metacognition, and
+personality.
 
-## Calling library
+\hypertarget{data-analysis}{%
+\section{Data analysis}\label{data-analysis}}
 
-```r
-library(tidyverse)
-```
+This is data anaylsis section of the development of SRCAQ. In study 1,
+EFA was performed to explore dimensionality of the measure. Overal scale
+and each subscale then assessed their reliability by using Cronbach's
+Alpha. In study 2, CFA was performed to confirm the structure model.
+There were three model compared: seven factor model, unidimensi model,
+and second-order model. Validity then assessed by correlating with
+external measure (Self-estimated cognitive abilities).
 
-```
+\hypertarget{calling-library}{%
+\subsection{Calling library}\label{calling-library}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## v ggplot2 3.3.3     v purrr   0.3.4
 ## v tibble  3.1.1     v dplyr   1.0.6
 ## v tidyr   1.1.3     v stringr 1.4.0
 ## v readr   1.4.0     v forcats 0.5.1
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## Warning: package 'tibble' was built under R version 4.0.5
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## Warning: package 'dplyr' was built under R version 4.0.5
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
-```
+\end{verbatim}
 
-```r
-library(psych)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(psych)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## Warning: package 'psych' was built under R version 4.0.5
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## 
 ## Attaching package: 'psych'
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## The following objects are masked from 'package:ggplot2':
 ## 
 ##     %+%, alpha
-```
+\end{verbatim}
 
-```r
-library(lavaan)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lavaan)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## Warning: package 'lavaan' was built under R version 4.0.5
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## This is lavaan 0.6-8
 ## lavaan is FREE software! Please report any bugs.
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## 
 ## Attaching package: 'lavaan'
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## The following object is masked from 'package:psych':
 ## 
 ##     cor2cov
-```
+\end{verbatim}
 
-```r
-library(semTools)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(semTools)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## Warning: package 'semTools' was built under R version 4.0.5
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## 
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## ###############################################################################
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## This is semTools 0.5-4
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## All users of R (or SEM) are invited to submit functions or ideas for functions.
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## ###############################################################################
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## 
 ## Attaching package: 'semTools'
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## The following object is masked from 'package:psych':
 ## 
 ##     skew
-```
+\end{verbatim}
 
-```
+\begin{verbatim}
 ## The following object is masked from 'package:readr':
 ## 
 ##     clipboard
-```
+\end{verbatim}
 
-```r
-library(ggplot2)
-library(semPlot)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(semPlot)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## Warning: package 'semPlot' was built under R version 4.0.5
-```
+\end{verbatim}
 
+\hypertarget{data-preparation}{%
+\subsection{Data preparation}\label{data-preparation}}
 
-## Data preparation
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"E:/Google Drive UMM/PhD ELTE/Git/SRCAQ21"}\NormalTok{)}
+\CommentTok{\# Reading data}
+\NormalTok{study1 }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"study1(n=412).csv"}\NormalTok{)}
+\NormalTok{study2 }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"study2(n=405).csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-```r
-setwd("E:/Google Drive UMM/PhD ELTE/Git/SRCAQ21")
-# Reading data
-study1 <- read.csv("study1(n=412).csv")
-study2 <- read.csv("study2(n=405).csv")
-```
+\hypertarget{creating-dataset-for-items}{%
+\subsection{Creating dataset for
+items}\label{creating-dataset-for-items}}
 
-## Creating dataset for items
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{items\_study1}\OtherTok{\textless{}{-}}\NormalTok{ study1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"SECA"}\NormalTok{))}
+\NormalTok{items\_study2 }\OtherTok{\textless{}{-}}\NormalTok{ study2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"SECA"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-```r
-items_study1<- study1 %>% 
-  select(starts_with("SECA"))
-items_study2 <- study2 %>% 
-  select(starts_with("SECA"))
-```
+\hypertarget{study-1-initial-validation-of-srcaq-21}{%
+\section{Study 1: Initial validation of
+SRCAQ-21}\label{study-1-initial-validation-of-srcaq-21}}
 
-# Study 1: Initial validation of SRCAQ-21
+\hypertarget{exploratory-data-analysis}{%
+\subsection{Exploratory Data Analysis}\label{exploratory-data-analysis}}
 
-## Exploratory Data Analysis
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{describe}\NormalTok{(study1)}
+\end{Highlighting}
+\end{Shaded}
 
-```r
-describe(study1)
-```
-
-```
+\begin{verbatim}
 ##           vars   n  mean   sd median trimmed  mad min max range  skew kurtosis
 ## Sex*         1 412  1.47 0.50   1.00    1.46 0.00   1   2     1  0.12    -1.99
 ## Age          2 412 19.34 1.12  19.00   19.23 1.48  17  26     9  1.49     4.90
@@ -232,37 +376,49 @@ describe(study1)
 ## SECA19    0.05
 ## SECA20    0.05
 ## SECA21    0.05
-```
+\end{verbatim}
 
-```r
-prop.table(table(study1$Sex))
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(study1}\SpecialCharTok{$}\NormalTok{Sex))}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ##    Female      Male 
 ## 0.5291262 0.4708738
-```
+\end{verbatim}
 
-```r
-prop.table(table(study1$Domicile))
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(study1}\SpecialCharTok{$}\NormalTok{Domicile))}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ##      Jawa Luar Jawa 
 ## 0.6941748 0.3058252
-```
-Skewness and kurtosis of all items are below 1.00, indicating univariate normality. 
+\end{verbatim}
 
-## EFA
-### Create the correlation matrix
+Skewness and kurtosis of all items are below 1.00, indicating univariate
+normality.
 
-```r
-cor_matrix <- lowerCor(items_study1)
-```
+\hypertarget{efa}{%
+\subsection{EFA}\label{efa}}
 
-```
+\hypertarget{create-the-correlation-matrix}{%
+\subsubsection{Create the correlation
+matrix}\label{create-the-correlation-matrix}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{lowerCor}\NormalTok{(items\_study1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ##        SECA1 SECA2 SECA3 SECA4 SECA5 SECA6 SECA7 SECA8 SECA9 SECA10 SECA11
 ## SECA1  1.00                                                               
 ## SECA2  0.53  1.00                                                         
@@ -296,16 +452,21 @@ cor_matrix <- lowerCor(items_study1)
 ## SECA19 0.21   0.34   0.37   0.27   0.25   0.28   0.23   1.00                
 ## SECA20 0.14   0.28   0.34   0.27   0.23   0.20   0.14   0.59   1.00         
 ## SECA21 0.13   0.12   0.21   0.21   0.15   0.10   0.06   0.32   0.35   1.00
-```
+\end{verbatim}
 
-### Asumption check
-#### Calculate the KMO score.
+\hypertarget{asumption-check}{%
+\subsubsection{Asumption check}\label{asumption-check}}
 
-```r
-KMO(cor_matrix)
-```
+\hypertarget{calculate-the-kmo-score.}{%
+\paragraph{Calculate the KMO score.}\label{calculate-the-kmo-score.}}
 
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{KMO}\NormalTok{(cor\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## Kaiser-Meyer-Olkin factor adequacy
 ## Call: KMO(r = cor_matrix)
 ## Overall MSA =  0.86
@@ -314,15 +475,18 @@ KMO(cor_matrix)
 ##   0.88   0.80   0.88   0.90   0.90   0.88   0.88   0.79   0.82   0.81   0.83 
 ## SECA12 SECA13 SECA14 SECA15 SECA16 SECA17 SECA18 SECA19 SECA20 SECA21 
 ##   0.87   0.85   0.89   0.91   0.91   0.87   0.89   0.84   0.83   0.89
-```
+\end{verbatim}
 
-#### Bartlett's sphericity test
+\hypertarget{bartletts-sphericity-test}{%
+\paragraph{Bartlett's sphericity test}\label{bartletts-sphericity-test}}
 
-```r
-cortest.bartlett(cor_matrix, n = 412)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cortest.bartlett}\NormalTok{(cor\_matrix, }\AttributeTok{n =} \DecValTok{412}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## $chisq
 ## [1] 3151.502
 ## 
@@ -331,43 +495,64 @@ cortest.bartlett(cor_matrix, n = 412)
 ## 
 ## $df
 ## [1] 210
-```
-The Kaiser–Meyer–Olkin (KMO) measure of sampling adequacy index was .86 and Bartlett's test of sphericity was significant (p < .001) suggesting that the sample was suitable for factor analysis. 
+\end{verbatim}
 
-### Create scree plot
+The Kaiser--Meyer--Olkin (KMO) measure of sampling adequacy index was
+.86 and Bartlett's test of sphericity was significant (p \textless{}
+.001) suggesting that the sample was suitable for factor analysis.
+
+\hypertarget{create-scree-plot}{%
+\subsubsection{Create scree plot}\label{create-scree-plot}}
+
 Create a scree plot to help the decision on how many factors to include
 
-```r
-scree(items_study1)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{scree}\NormalTok{(items\_study1)}
+\end{Highlighting}
+\end{Shaded}
 
-![](SRCAQ21_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+\includegraphics{SRCAQ21_files/figure-latex/unnamed-chunk-7-1.pdf}
 
-```r
-fa.parallel(items_study1)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fa.parallel}\NormalTok{(items\_study1)}
+\end{Highlighting}
+\end{Shaded}
 
-![](SRCAQ21_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
+\begin{verbatim}
+## Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, :
+## The estimated weights for the factor scores are probably incorrect. Try a
+## different factor score estimation method.
+\end{verbatim}
 
-```
+\includegraphics{SRCAQ21_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{verbatim}
 ## Parallel analysis suggests that the number of factors =  7  and the number of components =  4
-```
+\end{verbatim}
 
-### Run the factor analysis with 7 factors.
+\hypertarget{run-the-factor-analysis-with-7-factors.}{%
+\subsubsection{Run the factor analysis with 7
+factors.}\label{run-the-factor-analysis-with-7-factors.}}
 
-```r
-fa_7 <- fa(items_study1, nfactors = 7, fm = "pa", rotate = "promax")
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fa\_7 }\OtherTok{\textless{}{-}} \FunctionTok{fa}\NormalTok{(items\_study1, }\AttributeTok{nfactors =} \DecValTok{7}\NormalTok{, }\AttributeTok{fm =} \StringTok{"pa"}\NormalTok{, }\AttributeTok{rotate =} \StringTok{"promax"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## Loading required namespace: GPArotation
-```
+\end{verbatim}
 
-```r
-print(fa_7$loadings, cutoff = 0.3)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(fa\_7}\SpecialCharTok{$}\NormalTok{loadings, }\AttributeTok{cutoff =} \FloatTok{0.3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Loadings:
 ##        PA6    PA2    PA1    PA3    PA4    PA5    PA7   
@@ -397,17 +582,24 @@ print(fa_7$loadings, cutoff = 0.3)
 ## SS loadings    1.918 1.803 1.688 1.564 1.560 1.444 1.405
 ## Proportion Var 0.091 0.086 0.080 0.074 0.074 0.069 0.067
 ## Cumulative Var 0.091 0.177 0.258 0.332 0.406 0.475 0.542
-```
-The principal axis factoring extraction method in combination with Promax rotation was used, since permitting the factors to correlate was logically justified. Parallel analysis was conducted indicating a seven-factor solution. Item were distributed to their intended factors.
+\end{verbatim}
 
-### Alpha cronbach
+The principal axis factoring extraction method in combination with
+Promax rotation was used, since permitting the factors to correlate was
+logically justified. Parallel analysis was conducted indicating a
+seven-factor solution. Item were distributed to their intended factors.
 
-```r
-alpha.All <- alpha(items_study1[, 1:21])
-print(alpha.All)
-```
+\hypertarget{alpha-cronbach}{%
+\subsubsection{Alpha cronbach}\label{alpha-cronbach}}
 
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.All }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{21}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.All)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 1:21])
@@ -489,14 +681,16 @@ print(alpha.All)
 ## SECA19 0.02 0.12 0.37 0.35 0.13    0
 ## SECA20 0.02 0.15 0.44 0.28 0.10    0
 ## SECA21 0.05 0.19 0.34 0.30 0.12    0
-```
+\end{verbatim}
 
-```r
-alpha.Gf <- alpha(items_study1[, 1:3])
-print(alpha.Gf)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gf }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gf)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 1:3])
@@ -524,14 +718,16 @@ print(alpha.Gf)
 ## SECA1 0.01 0.07 0.38 0.44 0.09    0
 ## SECA2 0.01 0.06 0.37 0.45 0.10    0
 ## SECA3 0.01 0.19 0.46 0.26 0.07    0
-```
+\end{verbatim}
 
-```r
-alpha.Gwm <- alpha(items_study1[, 4:6])
-print(alpha.Gwm)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gwm }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gwm)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 4:6])
@@ -559,14 +755,16 @@ print(alpha.Gwm)
 ## SECA4 0.03 0.20 0.37 0.28 0.12    0
 ## SECA5 0.01 0.10 0.30 0.42 0.17    0
 ## SECA6 0.04 0.23 0.39 0.29 0.05    0
-```
+\end{verbatim}
 
-```r
-alpha.Glr <- alpha(items_study1[, 7:9])
-print(alpha.Glr)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Glr }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{7}\SpecialCharTok{:}\DecValTok{9}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Glr)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 7:9])
@@ -594,14 +792,16 @@ print(alpha.Glr)
 ## SECA7 0.02 0.15 0.45 0.29 0.09    0
 ## SECA8 0.01 0.10 0.21 0.39 0.29    0
 ## SECA9 0.02 0.13 0.20 0.34 0.30    0
-```
+\end{verbatim}
 
-```r
-alpha.Gv <- alpha(items_study1[, 10:12])
-print(alpha.Gv)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gv }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{10}\SpecialCharTok{:}\DecValTok{12}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gv)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 10:12])
@@ -629,14 +829,16 @@ print(alpha.Gv)
 ## SECA10 0.02 0.09 0.29 0.36 0.24    0
 ## SECA11 0.03 0.14 0.30 0.37 0.16    0
 ## SECA12 0.01 0.09 0.27 0.32 0.30    0
-```
+\end{verbatim}
 
-```r
-alpha.Gc <- alpha(items_study1[, 13:15])
-print(alpha.Gc)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gc }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{13}\SpecialCharTok{:}\DecValTok{15}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gc)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 13:15])
@@ -664,14 +866,16 @@ print(alpha.Gc)
 ## SECA13 0.01 0.10 0.40 0.33 0.16    0
 ## SECA14 0.01 0.10 0.48 0.33 0.08    0
 ## SECA15 0.00 0.05 0.38 0.39 0.18    0
-```
+\end{verbatim}
 
-```r
-alpha.Ga <- alpha(items_study1[, 16:18])
-print(alpha.Ga)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Ga }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{16}\SpecialCharTok{:}\DecValTok{18}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Ga)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 16:18])
@@ -699,14 +903,16 @@ print(alpha.Ga)
 ## SECA16 0.05 0.24 0.40 0.24 0.07    0
 ## SECA17 0.02 0.10 0.29 0.40 0.19    0
 ## SECA18 0.08 0.28 0.33 0.21 0.10    0
-```
+\end{verbatim}
 
-```r
-alpha.Gs <- alpha(items_study1[, 19:21])
-print(alpha.Gs)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gs }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study1[, }\DecValTok{19}\SpecialCharTok{:}\DecValTok{21}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gs)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study1[, 19:21])
@@ -734,21 +940,36 @@ print(alpha.Gs)
 ## SECA19 0.02 0.12 0.37 0.35 0.13    0
 ## SECA20 0.02 0.15 0.44 0.28 0.10    0
 ## SECA21 0.05 0.19 0.34 0.30 0.12    0
-```
-Cronbach’s Alpha for item groups for Gf, Gwm, Glr, Gv, Gc, Ga, and Gs α = .73, α = .78, α = .76, α = .78, α = .77,  α = .76, and  α = .68 respectively. Cronbach’s Alpha for all items α = 88.
+\end{verbatim}
 
-## Conclusion of Study 1
-Study 1 found that SRCAQ could be better explained by using seven-factors model. It was anticipated that a seven-factor solution would describe the data, which was consistent with the theoretical basis proposed. Cronbach's Alpha of each subscale were acceptable (> .70), except for Gs.
+Cronbach's Alpha for item groups for Gf, Gwm, Glr, Gv, Gc, Ga, and Gs α
+= .73, α = .78, α = .76, α = .78, α = .77, α = .76, and α = .68
+respectively. Cronbach's Alpha for all items α = 88.
 
+\hypertarget{conclusion-of-study-1}{%
+\subsection{Conclusion of Study 1}\label{conclusion-of-study-1}}
 
-# Study 2: Confirmatory Factor Analysis
-## Exploratory Data Analysis
+Study 1 found that SRCAQ could be better explained by using
+seven-factors model. It was anticipated that a seven-factor solution
+would describe the data, which was consistent with the theoretical basis
+proposed. Cronbach's Alpha of each subscale were acceptable
+(\textgreater{} .70), except for Gs.
 
-```r
-describe(study2)
-```
+\hypertarget{study-2-confirmatory-factor-analysis}{%
+\section{Study 2: Confirmatory Factor
+Analysis}\label{study-2-confirmatory-factor-analysis}}
 
-```
+\hypertarget{exploratory-data-analysis-1}{%
+\subsection{Exploratory Data
+Analysis}\label{exploratory-data-analysis-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{describe}\NormalTok{(study2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ##           vars   n   mean    sd median trimmed   mad   min max range  skew
 ## Sex*         1 405   1.43  0.50    1.0    1.41  0.00  1.00   2  1.00  0.29
 ## Age          2 405  19.38  1.20   19.0   19.23  1.48 18.00  29 11.00  2.48
@@ -831,46 +1052,55 @@ describe(study2)
 ## SR.Gc         0.82 0.10
 ## SR.Ga        -0.27 0.12
 ## SR.Gs         0.12 0.12
-```
+\end{verbatim}
 
-```r
-prop.table(table(study2$Sex))
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(study2}\SpecialCharTok{$}\NormalTok{Sex))}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ##    Female      Male 
 ## 0.5728395 0.4271605
-```
+\end{verbatim}
 
-```r
-prop.table(table(study2$Domicile))
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(study2}\SpecialCharTok{$}\NormalTok{Domicile))}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ##      Jawa Luar Jawa 
 ## 0.6839506 0.3160494
-```
+\end{verbatim}
 
-## CFA
-### Seven-factor model
+\hypertarget{cfa}{%
+\subsection{CFA}\label{cfa}}
 
-```r
-SECA.model1 <- ' 
-Gf  =~ SECA1 + SECA2 + SECA3
-Gwm =~ SECA4 + SECA5 + SECA6
-Glr  =~ SECA7 + SECA8 + SECA9
-Gv =~ SECA10 + SECA11 + SECA12
-Gc =~ SECA13 + SECA14 + SECA15
-Ga =~ SECA16 + SECA17 + SECA18
-Gs =~ SECA19 + SECA20 + SECA21
-'
-fit1 <- cfa(SECA.model1, data = items_study2, std.lv=TRUE)
-summary(fit1, standardized=TRUE, fit.measures=T)
-```
+\hypertarget{seven-factor-model}{%
+\subsubsection{Seven-factor model}\label{seven-factor-model}}
 
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SECA.model1 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} }
+\StringTok{Gf  =\textasciitilde{} SECA1 + SECA2 + SECA3}
+\StringTok{Gwm =\textasciitilde{} SECA4 + SECA5 + SECA6}
+\StringTok{Glr  =\textasciitilde{} SECA7 + SECA8 + SECA9}
+\StringTok{Gv =\textasciitilde{} SECA10 + SECA11 + SECA12}
+\StringTok{Gc =\textasciitilde{} SECA13 + SECA14 + SECA15}
+\StringTok{Ga =\textasciitilde{} SECA16 + SECA17 + SECA18}
+\StringTok{Gs =\textasciitilde{} SECA19 + SECA20 + SECA21}
+\StringTok{\textquotesingle{}}
+\NormalTok{fit1 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model1, }\AttributeTok{data =}\NormalTok{ items\_study2, }\AttributeTok{std.lv=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(fit1, }\AttributeTok{standardized=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{fit.measures=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## lavaan 0.6-8 ended normally after 31 iterations
 ## 
 ##   Estimator                                         ML
@@ -1013,28 +1243,33 @@ summary(fit1, standardized=TRUE, fit.measures=T)
 ##     Gc                1.000                               1.000    1.000
 ##     Ga                1.000                               1.000    1.000
 ##     Gs                1.000                               1.000    1.000
-```
+\end{verbatim}
 
-```r
-semPaths(fit1, style = "lisrel", layout = "tree", edge.color = "black",
-         residuals = F, sizeMan = 6, sizeLat = 6, sizeMan2 = 5, sizeLat2 = 5, 
-         edge.label.cex = 1, label.cex = 1, fixedStyle = "1",)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{semPaths}\NormalTok{(fit1, }\AttributeTok{style =} \StringTok{"lisrel"}\NormalTok{, }\AttributeTok{layout =} \StringTok{"tree"}\NormalTok{, }\AttributeTok{edge.color =} \StringTok{"black"}\NormalTok{,}
+         \AttributeTok{residuals =}\NormalTok{ F, }\AttributeTok{sizeMan =} \DecValTok{6}\NormalTok{, }\AttributeTok{sizeLat =} \DecValTok{6}\NormalTok{, }\AttributeTok{sizeMan2 =} \DecValTok{5}\NormalTok{, }\AttributeTok{sizeLat2 =} \DecValTok{5}\NormalTok{, }
+         \AttributeTok{edge.label.cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{label.cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{fixedStyle =} \StringTok{"1"}\NormalTok{,)}
+\end{Highlighting}
+\end{Shaded}
 
-![](SRCAQ21_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+\includegraphics{SRCAQ21_files/figure-latex/unnamed-chunk-11-1.pdf}
 
-### one-factor model
+\hypertarget{one-factor-model}{%
+\subsubsection{one-factor model}\label{one-factor-model}}
 
-```r
-SECA.model2 <- ' 
-G =~ SECA1 + SECA2 + SECA3 + SECA4 + SECA5 + SECA6 + SECA7 + SECA8 + SECA9 + SECA10 + 
-SECA11 + SECA12 + SECA13 + SECA14 + SECA15 + SECA16 + SECA17 + SECA18 + SECA19 + SECA20 + SECA21
-'
-fit2 <- cfa(SECA.model2, data = items_study2, std.lv=TRUE)
-summary(fit2, standardized=TRUE, fit.measures=T)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SECA.model2 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} }
+\StringTok{G =\textasciitilde{} SECA1 + SECA2 + SECA3 + SECA4 + SECA5 + SECA6 + SECA7 + SECA8 + SECA9 + SECA10 + }
+\StringTok{SECA11 + SECA12 + SECA13 + SECA14 + SECA15 + SECA16 + SECA17 + SECA18 + SECA19 + SECA20 + SECA21}
+\StringTok{\textquotesingle{}}
+\NormalTok{fit2 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model2, }\AttributeTok{data =}\NormalTok{ items\_study2, }\AttributeTok{std.lv=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(fit2, }\AttributeTok{standardized=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{fit.measures=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## lavaan 0.6-8 ended normally after 17 iterations
 ## 
 ##   Estimator                                         ML
@@ -1135,35 +1370,40 @@ summary(fit2, standardized=TRUE, fit.measures=T)
 ##    .SECA20            0.686    0.050   13.750    0.000    0.686    0.766
 ##    .SECA21            0.762    0.056   13.699    0.000    0.762    0.747
 ##     G                 1.000                               1.000    1.000
-```
+\end{verbatim}
 
-```r
-semPaths(fit2, style = "lisrel", layout = "tree", edge.color = "black",
-         residuals = F, sizeMan = 6, sizeLat = 6, sizeMan2 = 5, sizeLat2 = 5, 
-         edge.label.cex = 1, label.cex = 1, fixedStyle = "1", )
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{semPaths}\NormalTok{(fit2, }\AttributeTok{style =} \StringTok{"lisrel"}\NormalTok{, }\AttributeTok{layout =} \StringTok{"tree"}\NormalTok{, }\AttributeTok{edge.color =} \StringTok{"black"}\NormalTok{,}
+         \AttributeTok{residuals =}\NormalTok{ F, }\AttributeTok{sizeMan =} \DecValTok{6}\NormalTok{, }\AttributeTok{sizeLat =} \DecValTok{6}\NormalTok{, }\AttributeTok{sizeMan2 =} \DecValTok{5}\NormalTok{, }\AttributeTok{sizeLat2 =} \DecValTok{5}\NormalTok{, }
+         \AttributeTok{edge.label.cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{label.cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{fixedStyle =} \StringTok{"1"}\NormalTok{, )}
+\end{Highlighting}
+\end{Shaded}
 
-![](SRCAQ21_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+\includegraphics{SRCAQ21_files/figure-latex/unnamed-chunk-12-1.pdf}
 
-### Second-order model
+\hypertarget{second-order-model}{%
+\subsubsection{Second-order model}\label{second-order-model}}
 
-```r
-SECA.model3 <- ' 
-Gf  =~ SECA1 + SECA2 + SECA3
-Gwm =~ SECA4 + SECA5 + SECA6
-Glr  =~ SECA7 + SECA8 + SECA9
-Gv =~ SECA10 + SECA11 + SECA12
-Gc =~ SECA13 + SECA14 + SECA15
-Ga =~ SECA16 + SECA17 + SECA18
-Gs =~ SECA19 + SECA20 + SECA21
-G =~ Gf + Gwm + Glr + Gv + Gc + Ga + Gs
-'
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SECA.model3 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} }
+\StringTok{Gf  =\textasciitilde{} SECA1 + SECA2 + SECA3}
+\StringTok{Gwm =\textasciitilde{} SECA4 + SECA5 + SECA6}
+\StringTok{Glr  =\textasciitilde{} SECA7 + SECA8 + SECA9}
+\StringTok{Gv =\textasciitilde{} SECA10 + SECA11 + SECA12}
+\StringTok{Gc =\textasciitilde{} SECA13 + SECA14 + SECA15}
+\StringTok{Ga =\textasciitilde{} SECA16 + SECA17 + SECA18}
+\StringTok{Gs =\textasciitilde{} SECA19 + SECA20 + SECA21}
+\StringTok{G =\textasciitilde{} Gf + Gwm + Glr + Gv + Gc + Ga + Gs}
+\StringTok{\textquotesingle{}}
 
-fit3 <- cfa(SECA.model3, data = items_study2, std.lv=TRUE)
-summary(fit3, standardized=TRUE, fit.measures=T)
-```
+\NormalTok{fit3 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model3, }\AttributeTok{data =}\NormalTok{ items\_study2, }\AttributeTok{std.lv=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(fit3, }\AttributeTok{standardized=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{fit.measures=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## lavaan 0.6-8 ended normally after 41 iterations
 ## 
 ##   Estimator                                         ML
@@ -1285,23 +1525,28 @@ summary(fit3, standardized=TRUE, fit.measures=T)
 ##    .Ga                1.000                               0.449    0.449
 ##    .Gs                1.000                               0.513    0.513
 ##     G                 1.000                               1.000    1.000
-```
+\end{verbatim}
 
-```r
-semPaths(fit3, style = "lisrel", layout = "tree", edge.color = "black",
-         residuals = F, sizeMan = 6, sizeLat = 6, sizeMan2 = 5, sizeLat2 = 5, 
-         edge.label.cex = 1, label.cex = 1, fixedStyle = "1", )
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{semPaths}\NormalTok{(fit3, }\AttributeTok{style =} \StringTok{"lisrel"}\NormalTok{, }\AttributeTok{layout =} \StringTok{"tree"}\NormalTok{, }\AttributeTok{edge.color =} \StringTok{"black"}\NormalTok{,}
+         \AttributeTok{residuals =}\NormalTok{ F, }\AttributeTok{sizeMan =} \DecValTok{6}\NormalTok{, }\AttributeTok{sizeLat =} \DecValTok{6}\NormalTok{, }\AttributeTok{sizeMan2 =} \DecValTok{5}\NormalTok{, }\AttributeTok{sizeLat2 =} \DecValTok{5}\NormalTok{, }
+         \AttributeTok{edge.label.cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{label.cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{fixedStyle =} \StringTok{"1"}\NormalTok{, )}
+\end{Highlighting}
+\end{Shaded}
 
-![](SRCAQ21_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+\includegraphics{SRCAQ21_files/figure-latex/unnamed-chunk-13-1.pdf}
 
-### Model comparison
+\hypertarget{model-comparison}{%
+\subsubsection{Model comparison}\label{model-comparison}}
 
-```r
-anova(fit1, fit2, fit3)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(fit1, fit2, fit3)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## Chi-Squared Difference Test
 ## 
 ##       Df   AIC   BIC   Chisq Chisq diff Df diff Pr(>Chisq)    
@@ -1310,24 +1555,31 @@ anova(fit1, fit2, fit3)
 ## fit2 189 21038 21206 1330.86     972.30       7  < 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-The seven-factor model provided the best fit to the data with the highest value of CFI and TLI, and the lowest value of RMSEA, SRMR, and AIC in comparison to single-factor and second order model. 
+\end{verbatim}
 
-## nested model comparisons: measurement invariance by Sex
+The seven-factor model provided the best fit to the data with the
+highest value of CFI and TLI, and the lowest value of RMSEA, SRMR, and
+AIC in comparison to single-factor and second order model.
 
-```r
-fit.config <- cfa(SECA.model1, data = study2, group = "Sex")
-fit.metric <- cfa(SECA.model1, data = study2, group = "Sex",
-                  group.equal = "loadings")
-fit.scalar <- cfa(SECA.model1, data = study2, group = "Sex",
-                  group.equal = c("loadings","intercepts"))
-fit.strict <- cfa(SECA.model1, data = study2, group = "Sex",
-                  group.equal = c("loadings","intercepts","residuals"))
-measEqOut <- compareFit(fit.config, fit.metric, fit.scalar, fit.strict)
-summary(measEqOut)
-```
+\hypertarget{nested-model-comparisons-measurement-invariance-by-sex}{%
+\subsection{nested model comparisons: measurement invariance by
+Sex}\label{nested-model-comparisons-measurement-invariance-by-sex}}
 
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.config }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model1, }\AttributeTok{data =}\NormalTok{ study2, }\AttributeTok{group =} \StringTok{"Sex"}\NormalTok{)}
+\NormalTok{fit.metric }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model1, }\AttributeTok{data =}\NormalTok{ study2, }\AttributeTok{group =} \StringTok{"Sex"}\NormalTok{,}
+                  \AttributeTok{group.equal =} \StringTok{"loadings"}\NormalTok{)}
+\NormalTok{fit.scalar }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model1, }\AttributeTok{data =}\NormalTok{ study2, }\AttributeTok{group =} \StringTok{"Sex"}\NormalTok{,}
+                  \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{,}\StringTok{"intercepts"}\NormalTok{))}
+\NormalTok{fit.strict }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(SECA.model1, }\AttributeTok{data =}\NormalTok{ study2, }\AttributeTok{group =} \StringTok{"Sex"}\NormalTok{,}
+                  \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{,}\StringTok{"intercepts"}\NormalTok{,}\StringTok{"residuals"}\NormalTok{))}
+\NormalTok{measEqOut }\OtherTok{\textless{}{-}} \FunctionTok{compareFit}\NormalTok{(fit.config, fit.metric, fit.scalar, fit.strict)}
+\FunctionTok{summary}\NormalTok{(measEqOut)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## ################### Nested Model Comparison #########################
 ## Chi-Squared Difference Test
 ## 
@@ -1351,13 +1603,15 @@ summary(measEqOut)
 ## fit.metric - fit.config 14 -0.004 -0.003 -0.886 -56.940 0.001 0.007
 ## fit.scalar - fit.metric 14 -0.009 -0.008 14.959 -41.095 0.003 0.002
 ## fit.strict - fit.scalar 21 -0.010 -0.007 10.495 -73.587 0.003 0.001
-```
+\end{verbatim}
 
-```r
-summary(measEqOut, fit.measures = c("cfi", "rmsea", "srmr"))
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(measEqOut, }\AttributeTok{fit.measures =} \FunctionTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{, }\StringTok{"rmsea"}\NormalTok{, }\StringTok{"srmr"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## ################### Nested Model Comparison #########################
 ## Chi-Squared Difference Test
 ## 
@@ -1381,18 +1635,29 @@ summary(measEqOut, fit.measures = c("cfi", "rmsea", "srmr"))
 ## fit.metric - fit.config -0.004 0.001 0.007
 ## fit.scalar - fit.metric -0.009 0.003 0.002
 ## fit.strict - fit.scalar -0.010 0.003 0.001
-```
-The configural model (M1) had adequate fit indices, indicating the same factor structure in males and females. The fit indices (e.g., Chi-square, CFI, RMSEA, SRMR) of each model remained nearly unchanged in comparison to the fit indices of another model. Taking all of the results into consideration, the three models (metric through strict) showed no significant reductions in model fits, indicating that the six-factor structure reaches strict invariance between males and females.
+\end{verbatim}
 
-# Independent sample t-test
+The configural model (M1) had adequate fit indices, indicating the same
+factor structure in males and females. The fit indices (e.g.,
+Chi-square, CFI, RMSEA, SRMR) of each model remained nearly unchanged in
+comparison to the fit indices of another model. Taking all of the
+results into consideration, the three models (metric through strict)
+showed no significant reductions in model fits, indicating that the
+six-factor structure reaches strict invariance between males and
+females.
 
-```r
-t.test(SR.Gf ~ Sex, data = study2)
-```
+\hypertarget{independent-sample-t-test}{%
+\section{Independent sample t-test}\label{independent-sample-t-test}}
 
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Gf }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Gf by Sex
 ## t = -1.3111, df = 341.07, p-value = 0.1907
@@ -1402,15 +1667,17 @@ t.test(SR.Gf ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##              9.99569             10.26590
-```
+\end{verbatim}
 
-```r
-t.test(SR.Gwm ~ Sex, data = study2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Gwm }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Gwm by Sex
 ## t = -0.056177, df = 336.55, p-value = 0.9552
@@ -1420,15 +1687,17 @@ t.test(SR.Gwm ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##             10.00862             10.02312
-```
+\end{verbatim}
 
-```r
-t.test(SR.Glr ~ Sex, data = study2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Glr }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Glr by Sex
 ## t = -0.47716, df = 361.16, p-value = 0.6335
@@ -1438,15 +1707,17 @@ t.test(SR.Glr ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##             10.69397             10.82081
-```
+\end{verbatim}
 
-```r
-t.test(SR.Gv ~ Sex, data = study2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Gv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Gv by Sex
 ## t = -2.9509, df = 361.64, p-value = 0.003375
@@ -1456,15 +1727,17 @@ t.test(SR.Gv ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##             10.54741             11.29480
-```
+\end{verbatim}
 
-```r
-t.test(SR.Gc ~ Sex, data = study2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Gc }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Gc by Sex
 ## t = -0.42402, df = 352.29, p-value = 0.6718
@@ -1474,15 +1747,17 @@ t.test(SR.Gc ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##             10.38793             10.47399
-```
+\end{verbatim}
 
-```r
-t.test(SR.Ga ~ Sex, data = study2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Ga }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Ga by Sex
 ## t = -0.0046665, df = 363.09, p-value = 0.9963
@@ -1492,15 +1767,17 @@ t.test(SR.Ga ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##             9.698276             9.699422
-```
+\end{verbatim}
 
-```r
-t.test(SR.Gs ~ Sex, data = study2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(SR.Gs }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sex, }\AttributeTok{data =}\NormalTok{ study2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  SR.Gs by Sex
 ## t = 1.313, df = 359.84, p-value = 0.19
@@ -1510,16 +1787,21 @@ t.test(SR.Gs ~ Sex, data = study2)
 ## sample estimates:
 ## mean in group Female   mean in group Male 
 ##             10.33621             10.02890
-```
+\end{verbatim}
+
 Significant sex differences of cognitive abilities only found in Gv.
 
-# Correlation with external measure
+\hypertarget{correlation-with-external-measure}{%
+\section{Correlation with external
+measure}\label{correlation-with-external-measure}}
 
-```r
-correlation <- lowerCor(study2[, c(5, 27:40)])
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{correlation }\OtherTok{\textless{}{-}} \FunctionTok{lowerCor}\NormalTok{(study2[, }\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{27}\SpecialCharTok{:}\DecValTok{40}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ##        GPA  SE.Gf SE.Gw SE.Gl SE.Gv SE.Gc SE.Ga SE.Gs SR.Gf SR.Gw SR.Gl
 ## GPA    1.00                                                            
 ## SE.Gf  0.07 1.00                                                       
@@ -1541,17 +1823,23 @@ correlation <- lowerCor(study2[, c(5, 27:40)])
 ## SR.Gc 0.36  1.00             
 ## SR.Ga 0.46  0.47  1.00       
 ## SR.Gs 0.27  0.51  0.34  1.00
-```
-Each subscales were correlated with external measure (Self-Estimated Cognitive Ability). The same construct has high correlation (r = > .50), while cross-construct has low to moderate correlation.
+\end{verbatim}
 
-#Alpha Cronbach study 2
+Each subscales were correlated with external measure (Self-Estimated
+Cognitive Ability). The same construct has high correlation (r =
+\textgreater{} .50), while cross-construct has low to moderate
+correlation.
 
-```r
-alpha.All2 <- alpha(items_study2[, 1:21])
-print(alpha.All2)
-```
+\#Alpha Cronbach study 2
 
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.All2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{21}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.All2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 1:21])
@@ -1633,14 +1921,16 @@ print(alpha.All2)
 ## SECA19 0.02 0.08 0.40 0.37 0.13    0
 ## SECA20 0.01 0.15 0.41 0.29 0.13    0
 ## SECA21 0.02 0.19 0.38 0.26 0.14    0
-```
+\end{verbatim}
 
-```r
-alpha.Gf2 <- alpha(items_study2[, 1:3])
-print(alpha.Gf2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gf2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gf2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 1:3])
@@ -1668,14 +1958,16 @@ print(alpha.Gf2)
 ## SECA1 0.00 0.12 0.41 0.39 0.08    0
 ## SECA2 0.00 0.09 0.39 0.41 0.09    0
 ## SECA3 0.01 0.20 0.44 0.27 0.07    0
-```
+\end{verbatim}
 
-```r
-alpha.Gwm2 <- alpha(items_study2[, 4:6])
-print(alpha.Gwm2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gwm2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gwm2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 4:6])
@@ -1703,14 +1995,16 @@ print(alpha.Gwm2)
 ## SECA4 0.04 0.22 0.31 0.34 0.09    0
 ## SECA5 0.01 0.10 0.29 0.43 0.17    0
 ## SECA6 0.04 0.20 0.40 0.28 0.08    0
-```
+\end{verbatim}
 
-```r
-alpha.Glr2 <- alpha(items_study2[, 7:9])
-print(alpha.Glr2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Glr2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{7}\SpecialCharTok{:}\DecValTok{9}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Glr2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 7:9])
@@ -1738,14 +2032,16 @@ print(alpha.Glr2)
 ## SECA7 0.03 0.19 0.42 0.26 0.10    0
 ## SECA8 0.03 0.11 0.24 0.32 0.30    0
 ## SECA9 0.02 0.14 0.21 0.29 0.33    0
-```
+\end{verbatim}
 
-```r
-alpha.Gv2 <- alpha(items_study2[, 10:12])
-print(alpha.Gv2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gv2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{10}\SpecialCharTok{:}\DecValTok{12}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gv2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 10:12])
@@ -1773,14 +2069,16 @@ print(alpha.Gv2)
 ## SECA10 0.02 0.10 0.27 0.37 0.24    0
 ## SECA11 0.02 0.13 0.31 0.37 0.17    0
 ## SECA12 0.02 0.15 0.25 0.37 0.21    0
-```
+\end{verbatim}
 
-```r
-alpha.Gc2 <- alpha(items_study2[, 13:15])
-print(alpha.Gc2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gc2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{13}\SpecialCharTok{:}\DecValTok{15}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gc2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 13:15])
@@ -1808,14 +2106,16 @@ print(alpha.Gc2)
 ## SECA13 0.01 0.10 0.43 0.33 0.12    0
 ## SECA14 0.01 0.09 0.53 0.31 0.06    0
 ## SECA15 0.01 0.05 0.36 0.45 0.14    0
-```
+\end{verbatim}
 
-```r
-alpha.Ga2 <- alpha(items_study2[, 16:18])
-print(alpha.Ga2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Ga2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{16}\SpecialCharTok{:}\DecValTok{18}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Ga2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 16:18])
@@ -1843,14 +2143,16 @@ print(alpha.Ga2)
 ## SECA16 0.03 0.23 0.38 0.30 0.06    0
 ## SECA17 0.01 0.11 0.28 0.42 0.18    0
 ## SECA18 0.06 0.31 0.33 0.21 0.08    0
-```
+\end{verbatim}
 
-```r
-alpha.Gs2 <- alpha(items_study2[, 19:21])
-print(alpha.Gs2)
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha.Gs2 }\OtherTok{\textless{}{-}} \FunctionTok{alpha}\NormalTok{(items\_study2[, }\DecValTok{19}\SpecialCharTok{:}\DecValTok{21}\NormalTok{])}
+\FunctionTok{print}\NormalTok{(alpha.Gs2)}
+\end{Highlighting}
+\end{Shaded}
 
-```
+\begin{verbatim}
 ## 
 ## Reliability analysis   
 ## Call: alpha(x = items_study2[, 19:21])
@@ -1878,4 +2180,6 @@ print(alpha.Gs2)
 ## SECA19 0.02 0.08 0.40 0.37 0.13    0
 ## SECA20 0.01 0.15 0.41 0.29 0.13    0
 ## SECA21 0.02 0.19 0.38 0.26 0.14    0
-```
+\end{verbatim}
+
+\end{document}
